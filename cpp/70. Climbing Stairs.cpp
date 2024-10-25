@@ -1,19 +1,16 @@
 class Solution {
 public:
+    unordered_map<int, int> memo = {{1, 1}, {2, 2}};
     int climbStairs(int n) {
-        if (n == 0) return 1;
-        if (n == 1) return 1;
-
-        int first = 1;
-        int second = 1;
-        int ways = 0;
-
-        for (int i = 2; i <= n; i++){
-            ways = first + second;
-            first = second;
-            second = ways;
+        return fib(n);
+    }
+private:
+    int fib(int n){
+        if (memo[n]) {
+            return memo[n];
+        } else {
+            memo[n] = fib(n-1) + fib(n-2);
+            return memo[n];
         }
-
-        return ways;
     }
 };
