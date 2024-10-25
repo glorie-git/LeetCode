@@ -1,19 +1,20 @@
 class Solution {
 public:
     bool canConstruct(string ransomNote, string magazine) {
-        int initialSize = magazine.size();
-        for(const auto& chr: ransomNote){
-            auto it = magazine.find(chr);
-            for (auto it = magazine.begin(); it != magazine.end(); it++){
-                if ((*it) == chr){
-                    magazine.erase(it);
-                    break;
-                }
+        unordered_map<char, int> charCount;
+        
+        for(const char& chr: magazine){
+            charCount[chr]++;
+        }
+
+        for(const char& chr: ransomNote){
+            if(charCount[chr] > 0){
+                charCount[chr]--;
+            } else {
+                return false;
             }
         }
 
-        if ((initialSize - magazine.size()) == ransomNote.size()) return true;
-        else return false;
-
+        return true;
     }
 };
