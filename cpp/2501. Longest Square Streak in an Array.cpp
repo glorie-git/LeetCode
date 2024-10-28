@@ -1,21 +1,31 @@
 class Solution {
 public:
-    int longestSquareStreak(vector<int>& nums) {
-        sort(nums.begin(), nums.end());
-        unordered_set<int> num_set(nums.begin(), nums.end());
+    int longestSquareStreak(std::vector<int>& nums) {
+        std::sort(nums.begin(), nums.end());
+        std::unordered_set<long long> num_set(nums.begin(), nums.end());
         int max_length = -1;
 
-        for(const auto& num : nums){
+        for (const auto& num : nums) {
             int current_length = 1;
             long long current = num;
 
-            while (num_set.contains(current*current)) {
+            while (true) {
+                long long next = current * current;
+
+                if (next > std::numeric_limits<long long>::max()) {
+                    break;
+                }
+
+                if (!num_set.count(next)) {
+                    break;
+                }
+
                 current_length += 1;
-                current = current*current;
+                current = next;
             }
 
-            if (current_length >= 2){
-                max_length = max(max_length, current_length);
+            if (current_length >= 2) {
+                max_length = std::max(max_length, current_length);
             }
         }
 
